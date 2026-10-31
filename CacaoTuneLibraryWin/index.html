@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CacaoTuneLibrary</title>
+    <link rel="stylesheet" href="/src/styles.css" />
+    <script type="module" src="/src/main.ts" defer></script>
+  </head>
+  <body>
+    <main id="main">
+      <section class="input">
+        <div class="row">
+          <input id="urlInput" type="text" placeholder="YouTube の URL を貼り付けて Enter（複数でも可）" autocomplete="off" spellcheck="false" />
+          <button id="btnAdd" class="primary" disabled>＋ 追加</button>
+          <button id="btnClip" title="クリップボードの URL を追加（Ctrl+Shift+V）">📋</button>
+        </div>
+        <div class="row">
+          <span class="label">形式</span>
+          <span class="seg" id="formatSeg">
+            <button data-format="m4a" class="on" title="元の音声をそのまま（劣化なし・おすすめ）">M4A</button>
+            <button data-format="mp3" title="変換して保存（対応機器が多い）">MP3</button>
+          </span>
+          <span class="spacer"></span>
+          <span class="label">保存先:</span>
+          <span id="folderLabel" class="path"></span>
+          <button id="btnFolder">変更…</button>
+          <button id="btnOpenFolder" title="保存先をエクスプローラで開く（Ctrl+Shift+O）">📁</button>
+          <button id="btnSettings" title="設定">⚙</button>
+        </div>
+      </section>
+      <section id="jobs" class="list"></section>
+      <footer class="footer">
+        <span id="toolStatus"></span>
+        <span class="spacer"></span>
+        <button id="btnRename" title="保存した曲をチャンネルごとに並べて、検索・置換で名前を付け直す（Ctrl+R）">✎ ファイル名を整える</button>
+        <button id="btnClear" hidden>終わったものを消す</button>
+      </footer>
+    </main>
+
+    <!-- 設定 -->
+    <div id="settingsPanel" class="overlay" hidden>
+      <div class="panel">
+        <h2>設定</h2>
+        <h3>カバー画像</h3>
+        <label><input type="radio" name="coverMode" value="pad" /> 16:9 の幅のまま、上下をぼかしで埋めて正方形に</label>
+        <label><input type="radio" name="coverMode" value="crop" /> 中央を正方形に切り抜く</label>
+        <label><input type="radio" name="coverMode" value="none" /> そのまま（16:9）</label>
+        <label><input type="checkbox" id="optKeepThumb" /> カバー画像（jpg）もファイルとして残す</label>
+        <p class="note">曲の中には常にカバー画像とタイトル・チャンネル名を埋め込みます。エクスプローラはこのカバーをサムネイルに使います。</p>
+        <h3>保存</h3>
+        <label><input type="checkbox" id="optChannelFolders" /> 保存先の中にチャンネル名のフォルダを作って分ける</label>
+        <label><input type="checkbox" id="optWholePlaylist" /> 動画の URL に再生リストが付いているとき（&amp;list=…）も全曲を保存する</label>
+        <p class="note">再生リストそのものの URL（youtube.com/playlist?list=…）は、この設定に関係なく全曲を保存します。</p>
+        <label><input type="checkbox" id="optIdInFilename" /> ファイル名の末尾に動画 ID を付ける（同じ題名の曲がぶつからない）</label>
+        <h3>道具</h3>
+        <div class="row"><span class="label w">yt-dlp</span><input id="optYtdlp" type="text" placeholder="自動検出" /></div>
+        <div class="row"><span class="label w">ffmpeg</span><input id="optFfmpeg" type="text" placeholder="自動検出" /></div>
+        <div id="toolDetail" class="note"></div>
+        <div class="row">
+          <button id="btnRedetect">探し直す</button>
+          <button id="btnInstall" hidden>yt-dlp・ffmpeg・deno を用意する（GitHub から取得）</button>
+          <button id="btnUpdate">yt-dlp を更新</button>
+        </div>
+        <pre id="updateOut" class="out" hidden></pre>
+        <p class="note">YouTube 側の変更で保存できなくなったら、まず yt-dlp を更新してください。</p>
+        <div class="row end"><button id="btnSettingsClose" class="primary">閉じる</button></div>
+      </div>
+    </div>
+
+    <!-- ファイル名を整える -->
+    <div id="renamePanel" class="overlay" hidden>
+      <div class="panel wide">
+        <h2>ファイル名を整える <span id="renameFolder" class="path small"></span></h2>
+        <div class="row">
+          <input id="rnSearch" type="text" placeholder="検索" />
+          <span>→</span>
+          <input id="rnReplace" type="text" placeholder="置換（空なら削除）" />
+          <button id="rnApply" class="primary">置換</button>
+        </div>
+        <div class="row">
+          <label><input type="checkbox" id="rnRegex" /> 正規表現</label>
+          <label><input type="checkbox" id="rnIgnoreCase" /> 大文字小文字を区別しない</label>
+          <span class="label">対象</span><select id="rnScope"></select>
+          <span class="spacer"></span>
+          <button id="rnResetAll">すべて元に戻す</button>
+        </div>
+        <p class="note" id="rnHelp">置換は「新しい名前」に対してかかるので、何度でも重ねられます。例: 正規表現で「【.*?】」→ 空。ファイル名の末尾の動画 ID「 [xxxxxxxxxxx]」は隠してあり、更新のとき自動で付け直します。</p>
+        <div id="rnList" class="list tall"></div>
+        <div class="row">
+          <button id="rnRescan">↻ 読み直す</button>
+          <button id="rnSort" hidden>直下の曲をチャンネルに振り分ける</button>
+          <span class="spacer"></span>
+          <span id="rnStatus" class="note"></span>
+          <button id="rnCommit" class="primary" disabled>更新</button>
+          <button id="rnClose">閉じる</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

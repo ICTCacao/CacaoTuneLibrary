@@ -1,0 +1,393 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		09A4F801C87846872374364D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F2AE65515F314558F3E54B /* ContentView.swift */; };
+		196C1A8174F1BBE467214D1F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B516AF8DA4A258105D0F52F1 /* Assets.xcassets */; };
+		30AC7619405157EE102F79AB /* CacaoTuneLibraryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43444B77FC5DF94087368C /* CacaoTuneLibraryApp.swift */; };
+		4962DC81214DFB4EBCA0CDB5 /* RenameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CDD9821C79F332D3DC170B /* RenameView.swift */; };
+		516B1593C400D45622302794 /* Prefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3831A2AFD769A5D01D170A2D /* Prefs.swift */; };
+		55886E780C0EBCD34EC583EC /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333C08FDA7E3772C1B771569 /* Tools.swift */; };
+		72F3A6AE8AB4F2F0FEDFA8FE /* DownloadJob.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5717218E06B4ECE1D75CA7C2 /* DownloadJob.swift */; };
+		733284A1A0B184EBE1C94DFD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7F150880756484CF7C2E474D /* InfoPlist.strings */; };
+		82F5A084C90E43A996CE8976 /* RenameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EA6BF2E8C62D69FDEACD61 /* RenameModel.swift */; };
+		9440953E8EFE14965C6F3417 /* CoverArt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A73B7225BC7C9BDDAF9000A /* CoverArt.swift */; };
+		B770DFAEE8F03A2DF8C7F089 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 9F7FFCC224497298A56D2F5A /* LICENSE */; };
+		B77F9CB1787497AAD0C1FE2D /* ChannelSorter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94B6D02BDD3420D955FFCEC /* ChannelSorter.swift */; };
+		BD3A251D18C03A14DE08C8B3 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4656A472AB74F4A8055410 /* SettingsView.swift */; };
+		D3168F0B8B4988365F1813D4 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE148AB30E3BDDE4661B684 /* Downloader.swift */; };
+		DE6173FAB358189024AE0F5C /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5A602E16A02BC059426800 /* AppModel.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0B1C6C0C1178D6CB80E7A197 /* CacaoTuneLibrary.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CacaoTuneLibrary.entitlements; sourceTree = "<group>"; };
+		2A7DE6A2826722BDA84B97C2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		333C08FDA7E3772C1B771569 /* Tools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tools.swift; sourceTree = "<group>"; };
+		3831A2AFD769A5D01D170A2D /* Prefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prefs.swift; sourceTree = "<group>"; };
+		5717218E06B4ECE1D75CA7C2 /* DownloadJob.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadJob.swift; sourceTree = "<group>"; };
+		8A73B7225BC7C9BDDAF9000A /* CoverArt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverArt.swift; sourceTree = "<group>"; };
+		9C5A602E16A02BC059426800 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
+		9F7FFCC224497298A56D2F5A /* LICENSE */ = {isa = PBXFileReference; path = LICENSE; sourceTree = "<group>"; };
+		A2CDD9821C79F332D3DC170B /* RenameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameView.swift; sourceTree = "<group>"; };
+		A94B6D02BDD3420D955FFCEC /* ChannelSorter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelSorter.swift; sourceTree = "<group>"; };
+		B516AF8DA4A258105D0F52F1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B6EA6BF2E8C62D69FDEACD61 /* RenameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameModel.swift; sourceTree = "<group>"; };
+		CBE148AB30E3BDDE4661B684 /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
+		D39427062C0775270F10EDDE /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D9F2AE65515F314558F3E54B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		DA43444B77FC5DF94087368C /* CacaoTuneLibraryApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacaoTuneLibraryApp.swift; sourceTree = "<group>"; };
+		E3B13D6874B1DDC9E961ABB1 /* CacaoTuneLibrary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CacaoTuneLibrary.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED4656A472AB74F4A8055410 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		23EBD1A379E7FA6584E91669 /* CacaoTuneLibrary */ = {
+			isa = PBXGroup;
+			children = (
+				9C5A602E16A02BC059426800 /* AppModel.swift */,
+				DA43444B77FC5DF94087368C /* CacaoTuneLibraryApp.swift */,
+				A94B6D02BDD3420D955FFCEC /* ChannelSorter.swift */,
+				8A73B7225BC7C9BDDAF9000A /* CoverArt.swift */,
+				CBE148AB30E3BDDE4661B684 /* Downloader.swift */,
+				5717218E06B4ECE1D75CA7C2 /* DownloadJob.swift */,
+				3831A2AFD769A5D01D170A2D /* Prefs.swift */,
+				B6EA6BF2E8C62D69FDEACD61 /* RenameModel.swift */,
+				333C08FDA7E3772C1B771569 /* Tools.swift */,
+				2B11719A202DFB1AF4E29CA5 /* Resources */,
+				2B6141C084803270FECEBCD8 /* Views */,
+			);
+			path = CacaoTuneLibrary;
+			sourceTree = "<group>";
+		};
+		2B11719A202DFB1AF4E29CA5 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B516AF8DA4A258105D0F52F1 /* Assets.xcassets */,
+				0B1C6C0C1178D6CB80E7A197 /* CacaoTuneLibrary.entitlements */,
+				7F150880756484CF7C2E474D /* InfoPlist.strings */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		2B6141C084803270FECEBCD8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D9F2AE65515F314558F3E54B /* ContentView.swift */,
+				A2CDD9821C79F332D3DC170B /* RenameView.swift */,
+				ED4656A472AB74F4A8055410 /* SettingsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		4D119204C48B3DBDF1B83DA0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E3B13D6874B1DDC9E961ABB1 /* CacaoTuneLibrary.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		69099B8F08AF5ED286884D9B = {
+			isa = PBXGroup;
+			children = (
+				9F7FFCC224497298A56D2F5A /* LICENSE */,
+				23EBD1A379E7FA6584E91669 /* CacaoTuneLibrary */,
+				4D119204C48B3DBDF1B83DA0 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		78A315C3F96AF5EA1C883B5F /* CacaoTuneLibrary */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5450979B2D1F92B7D0BB5A0A /* Build configuration list for PBXNativeTarget "CacaoTuneLibrary" */;
+			buildPhases = (
+				837B77FA2F23A83388DFA419 /* Sources */,
+				D5EEBF3D7B44FBD12AEEA072 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CacaoTuneLibrary;
+			packageProductDependencies = (
+			);
+			productName = CacaoTuneLibrary;
+			productReference = E3B13D6874B1DDC9E961ABB1 /* CacaoTuneLibrary.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		10061481F17B6A91E8F60687 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					78A315C3F96AF5EA1C883B5F = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Manual;
+					};
+				};
+			};
+			buildConfigurationList = 794ED3C828B0C8C826173B21 /* Build configuration list for PBXProject "CacaoTuneLibrary" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+				ja,
+			);
+			mainGroup = 69099B8F08AF5ED286884D9B;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 4D119204C48B3DBDF1B83DA0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				78A315C3F96AF5EA1C883B5F /* CacaoTuneLibrary */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D5EEBF3D7B44FBD12AEEA072 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				196C1A8174F1BBE467214D1F /* Assets.xcassets in Resources */,
+				733284A1A0B184EBE1C94DFD /* InfoPlist.strings in Resources */,
+				B770DFAEE8F03A2DF8C7F089 /* LICENSE in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		837B77FA2F23A83388DFA419 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DE6173FAB358189024AE0F5C /* AppModel.swift in Sources */,
+				30AC7619405157EE102F79AB /* CacaoTuneLibraryApp.swift in Sources */,
+				B77F9CB1787497AAD0C1FE2D /* ChannelSorter.swift in Sources */,
+				09A4F801C87846872374364D /* ContentView.swift in Sources */,
+				9440953E8EFE14965C6F3417 /* CoverArt.swift in Sources */,
+				72F3A6AE8AB4F2F0FEDFA8FE /* DownloadJob.swift in Sources */,
+				D3168F0B8B4988365F1813D4 /* Downloader.swift in Sources */,
+				516B1593C400D45622302794 /* Prefs.swift in Sources */,
+				82F5A084C90E43A996CE8976 /* RenameModel.swift in Sources */,
+				4962DC81214DFB4EBCA0CDB5 /* RenameView.swift in Sources */,
+				BD3A251D18C03A14DE08C8B3 /* SettingsView.swift in Sources */,
+				55886E780C0EBCD34EC583EC /* Tools.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		7F150880756484CF7C2E474D /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2A7DE6A2826722BDA84B97C2 /* en */,
+				D39427062C0775270F10EDDE /* ja */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		7315632B60479B79B71B8FBC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CacaoTuneLibrary/Resources/CacaoTuneLibrary.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = CacaoTuneLibrary/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ictcacao.CacaoTuneLibrary;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		83CDAA1A619E1E2A8F384B0F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CacaoTuneLibrary/Resources/CacaoTuneLibrary.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = CacaoTuneLibrary/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ictcacao.CacaoTuneLibrary;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		991AA465CE37ABD51C4393C8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		EEE88E744759D0C3F376E246 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5450979B2D1F92B7D0BB5A0A /* Build configuration list for PBXNativeTarget "CacaoTuneLibrary" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7315632B60479B79B71B8FBC /* Debug */,
+				83CDAA1A619E1E2A8F384B0F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		794ED3C828B0C8C826173B21 /* Build configuration list for PBXProject "CacaoTuneLibrary" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EEE88E744759D0C3F376E246 /* Debug */,
+				991AA465CE37ABD51C4393C8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 10061481F17B6A91E8F60687 /* Project object */;
+}

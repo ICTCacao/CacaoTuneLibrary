@@ -1,4 +1,4 @@
-name: CacaoYT2Music
+name: CacaoTuneLibrary
 options:
   bundleIdPrefix: com.ictcacao
   deploymentTarget:
@@ -17,22 +17,22 @@ settings:
 
 targets:
   # YouTube の URL を入れると、音声だけを m4a（または mp3）にして保存する。実作業は yt-dlp + ffmpeg（Homebrew）
-  CacaoYT2Music:
+  CacaoTuneLibrary:
     type: application
     platform: macOS
     sources:
-      - path: CacaoYT2Music
+      - path: CacaoTuneLibrary
         excludes:
           - "Resources/*.plist"
       - path: LICENSE
         buildPhase: resources
     info:
-      path: CacaoYT2Music/Resources/Info.plist
+      path: CacaoTuneLibrary/Resources/Info.plist
       properties:
-        CFBundleDisplayName: CacaoYT2Music
-        CFBundleName: CacaoYT2Music
-        CFBundleShortVersionString: "1.0.3"
-        CFBundleVersion: "1.0.3"
+        CFBundleDisplayName: CacaoTuneLibrary
+        CFBundleName: CacaoTuneLibrary
+        CFBundleShortVersionString: "1.0.9"
+        CFBundleVersion: "1.0.9"
         LSMinimumSystemVersion: "14.0"
         CFBundleDevelopmentRegion: ja
         CFBundleLocalizations: [ja, en]
@@ -40,18 +40,18 @@ targets:
         NSHumanReadableCopyright: "© 2026 ICTCacao"
     # yt-dlp / ffmpeg を外部プロセスとして動かし、任意のフォルダに保存するため、サンドボックスは使わない
     entitlements:
-      path: CacaoYT2Music/Resources/CacaoYT2Music.entitlements
+      path: CacaoTuneLibrary/Resources/CacaoTuneLibrary.entitlements
       properties:
         com.apple.security.app-sandbox: false
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.ictcacao.CacaoYT2Music
+        PRODUCT_BUNDLE_IDENTIFIER: com.ictcacao.CacaoTuneLibrary
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
 
 schemes:
-  CacaoYT2Music:
+  CacaoTuneLibrary:
     build:
       targets:
-        CacaoYT2Music: all
+        CacaoTuneLibrary: all
     run:
       config: Debug

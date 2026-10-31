@@ -9,3 +9,10 @@ build/
 # 配布物: dmg は残し、.app はビルドで再生成する
 dist/*.app
 dist/.tmp-*.dmg
+# Windows 版（CacaoTuneLibraryWin: Tauri）
+CacaoTuneLibraryWin/node_modules/
+CacaoTuneLibraryWin/dist/
+CacaoTuneLibraryWin/src-tauri/target/
+CacaoTuneLibraryWin/src-tauri/gen/schemas/
+CacaoTuneLibraryWin/src-tauri/icons/android/
+CacaoTuneLibraryWin/src-tauri/icons/ios/

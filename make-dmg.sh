@@ -1,5 +1,5 @@
 #!/bin/zsh
-# 使い方: ./make-dmg.sh   dist/CacaoYT2Music.app から dist/CacaoYT2Music-<version>.dmg を作る
+# 使い方: ./make-dmg.sh   dist/CacaoTuneLibrary.app から dist/CacaoTuneLibrary-<version>.dmg を作る
 # dist/<App>.app から、背景に矢印付きのドラッグ＆ドロップ式 dmg を dist/<App>-<version>.dmg に作る。
 set -euo pipefail
 cd "$(dirname "$0")"
@@ -68,4 +68,4 @@ APPLESCRIPT
   echo "作成: $dmg ($(du -h "$dmg" | cut -f1))"
 }
 
-make_one CacaoYT2Music
+make_one CacaoTuneLibrary

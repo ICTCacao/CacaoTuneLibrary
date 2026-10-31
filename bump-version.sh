@@ -11,5 +11,10 @@ else
   new="${parts[1]}.${parts[2]}.$(( parts[3] + 1 ))"
 fi
 sed -i '' "s/\"$cur\"/\"$new\"/" project.yml
-[[ -f CacaoYT2Music/Resources/Info.plist ]] && sed -i '' "s|<string>$cur</string>|<string>$new</string>|" CacaoYT2Music/Resources/Info.plist
+[[ -f CacaoTuneLibrary/Resources/Info.plist ]] && sed -i '' "s|<string>$cur</string>|<string>$new</string>|" CacaoTuneLibrary/Resources/Info.plist
+# Windows 版（Tauri）も同じ版に
+W=CacaoTuneLibraryWin
+[[ -f $W/package.json ]] && sed -i '' "s/\"version\": \"$cur\"/\"version\": \"$new\"/" $W/package.json
+[[ -f $W/src-tauri/tauri.conf.json ]] && sed -i '' -e "s/\"version\": \"$cur\"/\"version\": \"$new\"/" -e "s/Windows 版 $cur/Windows 版 $new/" $W/src-tauri/tauri.conf.json
+[[ -f $W/src-tauri/Cargo.toml ]] && sed -i '' "s/^version = \"$cur\"/version = \"$new\"/" $W/src-tauri/Cargo.toml
 echo "$cur → $new"
