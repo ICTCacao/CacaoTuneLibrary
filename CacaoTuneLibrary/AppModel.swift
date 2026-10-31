@@ -49,11 +49,67 @@ final class AppModel {
     // MARK: URL の追加
 
     /// 入力欄のテキストから URL を拾って追加（複数行・空白区切りも可）
+    /// 入力欄の Return。URL なら追加、URL でない文字なら YouTube を検索する
     func addFromText() {
         let urls = Self.extractURLs(from: urlText)
-        if urls.isEmpty { return }
+        if urls.isEmpty {
+            let q = urlText.trimmingCharacters(in: .whitespacesAndNewlines)
+            if !q.isEmpty { urlText = ""; search(q) }
+            return
+        }
         urlText = ""
         for u in urls { enqueue(u) }
+    }
+
+    // MARK: 検索（yt-dlp の ytsearch）
+
+    var searchQuery = ""
+    var searchResults: [SearchResult] = []
+    var isSearching = false
+    var searchError: String?
+    var showSearch = false
+    private var searchCount = 20
+    private var searchGeneration = 0
+
+    /// 検索窓を開いて検索する（`more` なら同じ語で件数を増やす）
+    func search(_ query: String, more: Bool = false) {
+        guard let ytdlp else { return }
+        let q = query.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !q.isEmpty else { return }
+        if more { searchCount += 20 } else { searchCount = 20; searchResults = [] }
+        searchQuery = q
+        showSearch = true
+        isSearching = true
+        searchError = nil
+        searchGeneration += 1
+        let gen = searchGeneration
+        let args = SearchResult.arguments(query: q, count: searchCount)
+        prefetchQueue.async { [weak self] in
+            let r = Tools.run(ytdlp, args, timeout: 60)
+            let results = r.output.split(separator: "\n").compactMap(SearchResult.init(line:))
+            DispatchQueue.main.async {
+                guard let self, gen == self.searchGeneration else { return }
+                self.isSearching = false
+                if results.isEmpty {
+                    self.searchError = r.status == 0 ? "見つかりませんでした" : Downloader.humanize(r.output.split(separator: "\n").last.map(String.init) ?? "検索できませんでした")
+                } else {
+                    self.searchResults = results
+                }
+            }
+        }
+    }
+
+    /// 検索結果の 1 件を一覧に追加する。題名などは分かっているので先に入れておく
+    func add(result: SearchResult) {
+        enqueue(result.url)
+        if let job = jobs.first(where: { $0.url == result.url }) {
+            if job.title == nil { job.title = result.title }
+            if job.uploader == nil { job.uploader = result.channel }
+        }
+    }
+    /// もう一覧に入っているか（検索結果に「追加済み」を出す）
+    func isQueued(_ result: SearchResult) -> Bool {
+        jobs.contains(where: { $0.url == result.url })
     }
 
     func addFromClipboard() {

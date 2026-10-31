@@ -31,8 +31,8 @@ targets:
       properties:
         CFBundleDisplayName: CacaoTuneLibrary
         CFBundleName: CacaoTuneLibrary
-        CFBundleShortVersionString: "1.0.9"
-        CFBundleVersion: "1.0.9"
+        CFBundleShortVersionString: "1.0.10"
+        CFBundleVersion: "1.0.10"
         LSMinimumSystemVersion: "14.0"
         CFBundleDevelopmentRegion: ja
         CFBundleLocalizations: [ja, en]

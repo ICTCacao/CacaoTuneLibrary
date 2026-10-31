@@ -366,6 +366,12 @@ fn folder_override() -> Option<String> {
     std::env::var("CACAOTUNELIBRARY_FOLDER").ok().filter(|s| !s.is_empty())
 }
 
+/// 動作確認用: 環境変数 CACAOTUNELIBRARY_SEARCH があれば、起動と同時にその語で検索窓を開く
+#[tauri::command]
+fn search_override() -> Option<String> {
+    std::env::var("CACAOTUNELIBRARY_SEARCH").ok().filter(|s| !s.is_empty())
+}
+
 /// エクスプローラ（Finder）でそのファイルを選んで見せる
 #[tauri::command]
 async fn reveal(path: String) -> Result<(), String> {
@@ -396,7 +402,7 @@ pub fn run() {
         .manage(Running::default())
         .invoke_handler(tauri::generate_handler![
             tool_status, run_capture, start_download, cancel_download, install_tools,
-            scan_library, move_files, path_exists, ensure_dir, remove_file, default_folder, folder_override, reveal
+            scan_library, move_files, path_exists, ensure_dir, remove_file, default_folder, folder_override, search_override, reveal
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

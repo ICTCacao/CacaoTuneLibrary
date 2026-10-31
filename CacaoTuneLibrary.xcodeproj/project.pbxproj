@@ -11,6 +11,7 @@
 		196C1A8174F1BBE467214D1F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B516AF8DA4A258105D0F52F1 /* Assets.xcassets */; };
 		30AC7619405157EE102F79AB /* CacaoTuneLibraryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43444B77FC5DF94087368C /* CacaoTuneLibraryApp.swift */; };
 		4962DC81214DFB4EBCA0CDB5 /* RenameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CDD9821C79F332D3DC170B /* RenameView.swift */; };
+		4DAAF86AE21C18CCF98C476F /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 915CE42E0AAF224BB9BE422B /* Search.swift */; };
 		516B1593C400D45622302794 /* Prefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3831A2AFD769A5D01D170A2D /* Prefs.swift */; };
 		55886E780C0EBCD34EC583EC /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333C08FDA7E3772C1B771569 /* Tools.swift */; };
 		72F3A6AE8AB4F2F0FEDFA8FE /* DownloadJob.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5717218E06B4ECE1D75CA7C2 /* DownloadJob.swift */; };
@@ -22,15 +23,18 @@
 		BD3A251D18C03A14DE08C8B3 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4656A472AB74F4A8055410 /* SettingsView.swift */; };
 		D3168F0B8B4988365F1813D4 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE148AB30E3BDDE4661B684 /* Downloader.swift */; };
 		DE6173FAB358189024AE0F5C /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5A602E16A02BC059426800 /* AppModel.swift */; };
+		E62790D05C08A6CB00585204 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29851B80DE5390AFAB46BC18 /* SearchView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0B1C6C0C1178D6CB80E7A197 /* CacaoTuneLibrary.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CacaoTuneLibrary.entitlements; sourceTree = "<group>"; };
+		29851B80DE5390AFAB46BC18 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		2A7DE6A2826722BDA84B97C2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		333C08FDA7E3772C1B771569 /* Tools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tools.swift; sourceTree = "<group>"; };
 		3831A2AFD769A5D01D170A2D /* Prefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prefs.swift; sourceTree = "<group>"; };
 		5717218E06B4ECE1D75CA7C2 /* DownloadJob.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadJob.swift; sourceTree = "<group>"; };
 		8A73B7225BC7C9BDDAF9000A /* CoverArt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverArt.swift; sourceTree = "<group>"; };
+		915CE42E0AAF224BB9BE422B /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
 		9C5A602E16A02BC059426800 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
 		9F7FFCC224497298A56D2F5A /* LICENSE */ = {isa = PBXFileReference; path = LICENSE; sourceTree = "<group>"; };
 		A2CDD9821C79F332D3DC170B /* RenameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameView.swift; sourceTree = "<group>"; };
@@ -57,6 +61,7 @@
 				5717218E06B4ECE1D75CA7C2 /* DownloadJob.swift */,
 				3831A2AFD769A5D01D170A2D /* Prefs.swift */,
 				B6EA6BF2E8C62D69FDEACD61 /* RenameModel.swift */,
+				915CE42E0AAF224BB9BE422B /* Search.swift */,
 				333C08FDA7E3772C1B771569 /* Tools.swift */,
 				2B11719A202DFB1AF4E29CA5 /* Resources */,
 				2B6141C084803270FECEBCD8 /* Views */,
@@ -79,6 +84,7 @@
 			children = (
 				D9F2AE65515F314558F3E54B /* ContentView.swift */,
 				A2CDD9821C79F332D3DC170B /* RenameView.swift */,
+				29851B80DE5390AFAB46BC18 /* SearchView.swift */,
 				ED4656A472AB74F4A8055410 /* SettingsView.swift */,
 			);
 			path = Views;
@@ -185,6 +191,8 @@
 				516B1593C400D45622302794 /* Prefs.swift in Sources */,
 				82F5A084C90E43A996CE8976 /* RenameModel.swift in Sources */,
 				4962DC81214DFB4EBCA0CDB5 /* RenameView.swift in Sources */,
+				4DAAF86AE21C18CCF98C476F /* Search.swift in Sources */,
+				E62790D05C08A6CB00585204 /* SearchView.swift in Sources */,
 				BD3A251D18C03A14DE08C8B3 /* SettingsView.swift in Sources */,
 				55886E780C0EBCD34EC583EC /* Tools.swift in Sources */,
 			);

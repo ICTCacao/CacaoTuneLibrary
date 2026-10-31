@@ -11,7 +11,7 @@
     <main id="main">
       <section class="input">
         <div class="row">
-          <input id="urlInput" type="text" placeholder="YouTube の URL を貼り付けて Enter（複数でも可）" autocomplete="off" spellcheck="false" />
+          <input id="urlInput" type="text" placeholder="YouTube の URL を貼り付けるか、曲名・アーティスト名を入れて Enter" autocomplete="off" spellcheck="false" />
           <button id="btnAdd" class="primary" disabled>＋ 追加</button>
           <button id="btnClip" title="クリップボードの URL を追加（Ctrl+Shift+V）">📋</button>
         </div>
@@ -65,6 +65,24 @@
         <pre id="updateOut" class="out" hidden></pre>
         <p class="note">YouTube 側の変更で保存できなくなったら、まず yt-dlp を更新してください。</p>
         <div class="row end"><button id="btnSettingsClose" class="primary">閉じる</button></div>
+      </div>
+    </div>
+
+    <!-- YouTube を検索 -->
+    <div id="searchPanel" class="overlay" hidden>
+      <div class="panel wide">
+        <div class="row">
+          <span class="label">🔍</span>
+          <input id="sInput" type="text" placeholder="曲名・アーティスト名・チャンネル名" autocomplete="off" spellcheck="false" />
+          <button id="sGo" class="primary">検索</button>
+        </div>
+        <div id="sList" class="list tall"></div>
+        <div class="row">
+          <span class="note">追加した曲は、閉じたあとメインの一覧で保存が進みます</span>
+          <span class="spacer"></span>
+          <span id="sStatus" class="note"></span>
+          <button id="sClose">閉じる</button>
+        </div>
       </div>
     </div>
 

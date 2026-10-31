@@ -136,9 +136,14 @@ function enqueue(url: string) {
   prefetch(job);
   pump();
 }
+/// 入力欄の Enter。URL なら追加、URL でない文字なら YouTube を検索する
 function addFromText() {
   const urls = extractURLs(urlInput.value);
-  if (urls.length === 0) return;
+  if (urls.length === 0) {
+    const q = urlInput.value.trim();
+    if (q) { urlInput.value = ""; updateAddButton(); openSearch(q); }
+    return;
+  }
   urlInput.value = "";
   updateAddButton();
   urls.forEach(enqueue);
@@ -310,7 +315,110 @@ const urlInput = $<HTMLInputElement>("urlInput");
 const btnAdd = $<HTMLButtonElement>("btnAdd");
 const jobsEl = $("jobs");
 
-function updateAddButton() { btnAdd.disabled = extractURLs(urlInput.value).length === 0 || !toolsReady(); }
+function updateAddButton() {
+  const t = urlInput.value.trim();
+  const isSearch = t !== "" && extractURLs(t).length === 0;
+  btnAdd.disabled = t === "" || !toolsReady();
+  btnAdd.textContent = isSearch ? "🔍 検索" : "＋ 追加";
+  btnAdd.title = isSearch ? "YouTube を検索して、結果から選んで追加" : "URL を一覧に追加";
+}
+
+// ---------------------------------------------------------------- YouTube を検索（yt-dlp の ytsearch。Mac 版 Search.swift と同じ）
+interface SearchResult { id: string; title: string; channel: string | null; duration: number | null; viewCount: number | null }
+let sResults: SearchResult[] = [];
+let sQuery = "";
+let sCount = 20;
+let sGeneration = 0;
+let sBusy = false;
+const srURL = (r: SearchResult) => `https://www.youtube.com/watch?v=${r.id}`;
+function fmtDuration(s: number) {
+  const p = (n: number) => String(n).padStart(2, "0");
+  return s >= 3600 ? `${Math.floor(s / 3600)}:${p(Math.floor((s % 3600) / 60))}:${p(s % 60)}` : `${Math.floor(s / 60)}:${p(s % 60)}`;
+}
+function fmtViews(v: number) {
+  if (v >= 1e8) return `${(v / 1e8).toFixed(1)}億回`;
+  if (v >= 1e4) return `${(v / 1e4).toFixed(1)}万回`;
+  return `${v}回`;
+}
+function openSearch(q: string) {
+  $("searchPanel").hidden = false;
+  const input = $<HTMLInputElement>("sInput");
+  input.value = q;
+  input.focus();
+  runSearch(q, false);
+}
+async function runSearch(q: string, more: boolean) {
+  if (!tools.ytdlp) return;
+  q = q.trim();
+  if (!q) return;
+  if (more) sCount += 20; else { sCount = 20; sResults = []; }
+  sQuery = q;
+  sBusy = true;
+  const gen = ++sGeneration;
+  sRender(null);
+  const args = [
+    "--no-update", "--no-warnings", "--no-colors", "--encoding", "utf-8", "--flat-playlist", "--skip-download",
+    "--print", "%(id)s\t%(title)s\t%(channel,uploader|)s\t%(duration|)s\t%(view_count|)s",
+  ];
+  if (tools.deno) args.push("--js-runtimes", `deno:${tools.deno}`);
+  args.push("--", `ytsearch${sCount}:${q}`);
+  let error: string | null = null;
+  try {
+    const r = await invoke<{ code: number | null; output: string }>("run_capture", { exe: tools.ytdlp, args, timeoutSec: 60 });
+    if (gen !== sGeneration) return;
+    const found: SearchResult[] = [];
+    for (const line of r.output.split(/\r?\n/)) {
+      const f = line.split("\t");
+      if (f.length < 5 || !f[0]) continue;
+      found.push({
+        id: f[0], title: f[1] || f[0], channel: f[2] && f[2] !== "NA" ? f[2] : null,
+        duration: f[3] ? Number(f[3]) : null, viewCount: f[4] ? Number(f[4]) : null,
+      });
+    }
+    if (found.length) sResults = found;
+    else error = r.code === 0 ? "見つかりませんでした" : humanize(r.output.split(/\r?\n/).filter(Boolean).pop() ?? "検索できませんでした");
+  } catch (e) {
+    if (gen !== sGeneration) return;
+    error = String(e);
+  }
+  sBusy = false;
+  sRender(error);
+}
+function sRender(error: string | null) {
+  const list = $("sList");
+  $("sStatus").textContent = sBusy ? `「${sQuery}」を YouTube で検索しています…` : (sResults.length ? `${sResults.length} 件` : "");
+  if (sBusy && sResults.length === 0) { list.innerHTML = `<div class="empty"><div>検索しています…</div></div>`; return; }
+  if (error && sResults.length === 0) { list.innerHTML = `<div class="empty"><div class="big">🔍</div><div>${esc(error)}</div></div>`; return; }
+  const rows = sResults.map((r) => {
+    const sub = [r.channel, [r.duration != null ? fmtDuration(r.duration) : "", r.viewCount != null ? fmtViews(r.viewCount) : ""].filter(Boolean).join(" ・ ")].filter(Boolean).join(" ・ ");
+    const queued = jobs.some((j) => j.url === srURL(r));
+    return `<div class="sr" data-id="${esc(r.id)}">
+      <img class="thumb wide" src="https://i.ytimg.com/vi/${esc(r.id)}/mqdefault.jpg" alt="" loading="lazy" />
+      <div class="body"><div class="title">${esc(r.title)}</div><div class="sub">${esc(sub)}</div></div>
+      ${queued ? `<span class="added">✓ 追加済み</span>` : `<button data-act="add" ${toolsReady() ? "" : "disabled"}>＋ 追加</button>`}
+    </div>`;
+  });
+  rows.push(`<div class="more">${sBusy ? `<span class="note">検索しています…</span>` : `<button data-act="more">もっと見る</button>`}</div>`);
+  list.innerHTML = rows.join("");
+}
+function bindSearch() {
+  const input = $<HTMLInputElement>("sInput");
+  input.addEventListener("keydown", (e) => { if (e.key === "Enter") runSearch(input.value, false); });
+  $("sGo").addEventListener("click", () => runSearch(input.value, false));
+  $("sClose").addEventListener("click", () => { $("searchPanel").hidden = true; });
+  $("sList").addEventListener("click", (ev) => {
+    const btn = (ev.target as HTMLElement).closest("button[data-act]") as HTMLButtonElement | null;
+    if (!btn) return;
+    if (btn.dataset.act === "more") { runSearch(sQuery, true); return; }
+    const row = btn.closest(".sr") as HTMLElement | null;
+    const r = sResults.find((x) => x.id === row?.dataset.id);
+    if (!r) return;
+    enqueue(srURL(r));
+    const job = jobs.find((j) => j.url === srURL(r));
+    if (job) { if (job.title == null) job.title = r.title; if (job.uploader == null && r.channel) job.uploader = r.channel; renderJobs(); }
+    sRender(null);
+  });
+}
 
 let renderQueued = false;
 function renderJobs() {
@@ -676,13 +784,14 @@ async function main() {
     if (mod && e.shiftKey && e.key.toLowerCase() === "v") { e.preventDefault(); addFromClipboard(); }
     if (mod && e.shiftKey && e.key.toLowerCase() === "o") { e.preventDefault(); openPath(settings.folder); }
     if (mod && !e.shiftKey && e.key.toLowerCase() === "r") { e.preventDefault(); openRename(); }
-    if (e.key === "Escape") { $("settingsPanel").hidden = true; $("renamePanel").hidden = true; }
+    if (e.key === "Escape") { $("settingsPanel").hidden = true; $("renamePanel").hidden = true; $("searchPanel").hidden = true; }
   });
   // URL のドラッグ＆ドロップ
   document.addEventListener("dragover", (e) => e.preventDefault());
   document.addEventListener("drop", (e) => { e.preventDefault(); const t = e.dataTransfer?.getData("text") ?? ""; extractURLs(t).forEach(enqueue); });
   bindSettings();
   bindRename();
+  bindSearch();
 
   await listen<{ job_id: string; line: string }>("dl-line", (ev) => {
     const job = jobs.find((j) => j.id === ev.payload.job_id);
@@ -698,5 +807,7 @@ async function main() {
   renderJobs();
   await refreshTools();
   urlInput.focus();
+  const q = await invoke<string | null>("search_override");   // 動作確認用
+  if (q) openSearch(q);
 }
 main();

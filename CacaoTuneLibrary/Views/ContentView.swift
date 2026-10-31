@@ -14,17 +14,22 @@ struct ContentView: View {
             // 入力
             VStack(alignment: .leading, spacing: 10) {
                 HStack(spacing: 8) {
-                    TextField("YouTube の URL を貼り付けて Return（複数でも可）", text: $model.urlText)
+                    TextField("YouTube の URL を貼り付けるか、曲名・アーティスト名を入れて Return", text: $model.urlText)
                         .textFieldStyle(.roundedBorder)
                         .focused($urlFocused)
                         .onSubmit { model.addFromText() }
                     Button {
                         model.addFromText()
                     } label: {
-                        Label("追加", systemImage: "plus")
+                        if isSearchText {
+                            Label("検索", systemImage: "magnifyingglass")
+                        } else {
+                            Label("追加", systemImage: "plus")
+                        }
                     }
-                    .disabled(AppModel.extractURLs(from: model.urlText).isEmpty || !model.toolsReady)
+                    .disabled(model.urlText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || !model.toolsReady)
                     .keyboardShortcut(.defaultAction)
+                    .help(isSearchText ? "YouTube を検索して、結果から選んで追加" : "URL を一覧に追加")
                     Button {
                         model.addFromClipboard()
                     } label: {
@@ -68,7 +73,7 @@ struct ContentView: View {
                         .foregroundStyle(.tertiary)
                     Text("ここに保存した曲が並びます")
                         .foregroundStyle(.secondary)
-                    Text("URL はこの窓にドラッグ＆ドロップしても追加できます")
+                    Text("URL はこの窓にドラッグ＆ドロップしても追加できます。曲名を入れて Return すると YouTube を検索できます")
                         .font(.callout)
                         .foregroundStyle(.tertiary)
                 }
@@ -103,7 +108,20 @@ struct ContentView: View {
             model.add(urls: items)
             return true
         }
-        .onAppear { urlFocused = true }
+        .onAppear {
+            urlFocused = true
+            // 動作確認用: 環境変数に検索語があれば、起動と同時に検索窓を開く
+            if let q = ProcessInfo.processInfo.environment["CACAOTUNELIBRARY_SEARCH"], !q.isEmpty { model.search(q) }
+        }
+        .sheet(isPresented: $model.showSearch) {
+            SearchView().environment(model)
+        }
+    }
+
+    /// 入力欄の中身が URL ではない（＝検索語）
+    private var isSearchText: Bool {
+        let t = model.urlText.trimmingCharacters(in: .whitespacesAndNewlines)
+        return !t.isEmpty && AppModel.extractURLs(from: t).isEmpty
     }
 
     private func abbreviated(_ path: String) -> String {
