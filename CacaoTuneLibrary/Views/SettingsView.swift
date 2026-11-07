@@ -33,7 +33,7 @@ struct SettingsView: View {
                     .font(.caption).foregroundStyle(.secondary)
                 Toggle("ファイル名の末尾に動画 ID を付ける（同じ題名の曲がぶつからない）", isOn: $idInFilename)
             }
-            Section("道具（Homebrew）") {
+            Section("道具（yt-dlp・ffmpeg）") {
                 LabeledContent("yt-dlp") {
                     VStack(alignment: .trailing, spacing: 4) {
                         TextField("自動検出（\(model.ytdlp?.path ?? "見つかりません")）", text: $ytdlpPath)
@@ -51,9 +51,18 @@ struct SettingsView: View {
                 }
                 HStack {
                     Button("探し直す") { model.refreshTools() }
-                    Button(updating ? "更新中…" : "yt-dlp を更新（brew upgrade）") { update() }
-                        .disabled(updating || Tools.brew == nil)
+                    if model.toolsReady {
+                        Button(updating || model.installing ? "更新中…" : (Tools.isAppManaged(model.ytdlp) ? "yt-dlp を更新" : "yt-dlp を更新（brew upgrade）")) { update() }
+                            .disabled(updating || model.installing || (!Tools.isAppManaged(model.ytdlp) && Tools.brew == nil))
+                    } else {
+                        Button(model.installing ? "用意しています…" : "道具を用意する") { model.installTools() }
+                            .disabled(model.installing)
+                    }
+                    if model.installing { ProgressView().controlSize(.small); Text(model.installMessage).font(.caption) }
                     Spacer()
+                }
+                if let err = model.installError {
+                    Text(err).font(.caption).foregroundStyle(.red)
                 }
                 if let r = updateResult {
                     ScrollView {
@@ -64,7 +73,7 @@ struct SettingsView: View {
                     }
                     .frame(height: 90)
                 }
-                Text("YouTube 側の変更で保存できなくなったら、まず yt-dlp を更新してください。入っていないときはターミナルで brew install yt-dlp ffmpeg。")
+                Text("YouTube 側の変更で保存できなくなったら、まず yt-dlp を更新してください。入っていないときは「道具を用意する」を押すと、アプリが自分で取ってきます（Homebrew は要りません）。")
                     .font(.caption).foregroundStyle(.secondary)
             }
         }
@@ -75,6 +84,7 @@ struct SettingsView: View {
     }
 
     private func update() {
+        if Tools.isAppManaged(model.ytdlp) { model.installTools(ytdlpOnly: true); return }
         guard let brew = Tools.brew else { return }
         updating = true
         updateResult = nil

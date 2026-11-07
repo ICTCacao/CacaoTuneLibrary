@@ -2,10 +2,22 @@ import Foundation
 
 /// yt-dlp / ffmpeg の場所を探す。Homebrew（Apple Silicon / Intel）と ~/.local/bin を見る。
 enum Tools {
+    /// アプリが自分で取ってきた道具の置き場（Homebrew なしで使えるようにするため）
+    static let appToolsDir = FileManager.default
+        .urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
+        .appendingPathComponent("CacaoTuneLibrary/tools", isDirectory: true)
+
+    /// Homebrew を先に見る（すでに入れている人はそれを使う）。なければアプリが用意したもの
     static let searchDirs: [String] = [
         "/opt/homebrew/bin", "/usr/local/bin",
+        appToolsDir.path,
         NSHomeDirectory() + "/.local/bin", "/usr/bin",
     ]
+
+    /// その道具が、アプリが用意したもの（= アプリ自身で更新できるもの）か
+    static func isAppManaged(_ url: URL?) -> Bool {
+        url?.deletingLastPathComponent().path == appToolsDir.path
+    }
 
     /// 設定で指定があればそれを、なければ探して返す
     static func locate(_ name: String, override: String) -> URL? {

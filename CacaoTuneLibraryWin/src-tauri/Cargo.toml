@@ -1,6 +1,6 @@
 [package]
 name = "cacaotunelibrarywin"
-version = "1.0.10"
+version = "1.0.11"
 description = "CacaoTuneLibrary Windows 版（YouTube の音声を m4a / mp3 にしてチャンネル別の棚に並べる）"
 authors = ["ICTCacao"]
 edition = "2021"

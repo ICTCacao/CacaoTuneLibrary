@@ -33,6 +33,36 @@ final class AppModel {
     var isBusy: Bool { current != nil }
     var toolsReady: Bool { ytdlp != nil && ffmpeg != nil }
 
+    // MARK: 道具の用意（yt-dlp・ffmpeg・deno をアプリが自分で取ってくる）
+
+    var installing = false
+    var installMessage = ""
+    var installError: String?
+
+    /// `ytdlpOnly` が true なら yt-dlp だけ入れ直す（更新）
+    func installTools(ytdlpOnly: Bool = false) {
+        guard !installing else { return }
+        installing = true
+        installError = nil
+        installMessage = "準備を始めます…"
+        Task {
+            let report: @Sendable (String) -> Void = { msg in
+                Task { @MainActor in self.installMessage = msg }
+            }
+            do {
+                if ytdlpOnly { try await ToolInstaller.installYtdlp(progress: report) }
+                else { try await ToolInstaller.installAll(progress: report) }
+                await MainActor.run { self.installMessage = ytdlpOnly ? "yt-dlp を更新しました" : "準備ができました" }
+            } catch {
+                await MainActor.run { self.installError = error.localizedDescription }
+            }
+            await MainActor.run {
+                self.installing = false
+                self.refreshTools()
+            }
+        }
+    }
+
     func refreshTools() {
         let d = UserDefaults.standard
         ytdlp = Tools.locate("yt-dlp", override: d.string(forKey: Prefs.ytdlpPath) ?? "")

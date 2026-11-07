@@ -170,7 +170,7 @@ final class Downloader {
         if m.contains("is not a valid url") || m.contains("unsupported url") { return "URL として読めません" }
         if m.contains("video unavailable") || m.contains("private video") { return "この動画は見られません（非公開・削除など）" }
         if m.contains("sign in") || m.contains("age") && m.contains("confirm") { return "ログインが必要な動画です" }
-        if m.contains("ffmpeg") || m.contains("ffprobe") { return "ffmpeg が見つかりません（brew install ffmpeg）" }
+        if m.contains("ffmpeg") || m.contains("ffprobe") { return "ffmpeg が見つかりません（設定の「道具を用意する」を押してください）" }
         if m.contains("unable to download") || m.contains("network") || m.contains("resolve") { return "ネットワークにつながりません" }
         if m.contains("requested format is not available") { return "音声の形式が取り出せません（yt-dlp を更新すると直ることが多い）" }
         if m.contains("nsig") || m.contains("signature") || m.contains("player") { return "YouTube 側が変わりました（yt-dlp を更新してください）" }

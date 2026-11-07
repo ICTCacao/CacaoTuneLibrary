@@ -16,6 +16,7 @@
 		55886E780C0EBCD34EC583EC /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333C08FDA7E3772C1B771569 /* Tools.swift */; };
 		72F3A6AE8AB4F2F0FEDFA8FE /* DownloadJob.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5717218E06B4ECE1D75CA7C2 /* DownloadJob.swift */; };
 		733284A1A0B184EBE1C94DFD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7F150880756484CF7C2E474D /* InfoPlist.strings */; };
+		7A936DD86FED6C0AD0FF3ADE /* ToolInstaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4C9FD9205C138D91D79706 /* ToolInstaller.swift */; };
 		82F5A084C90E43A996CE8976 /* RenameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EA6BF2E8C62D69FDEACD61 /* RenameModel.swift */; };
 		9440953E8EFE14965C6F3417 /* CoverArt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A73B7225BC7C9BDDAF9000A /* CoverArt.swift */; };
 		B770DFAEE8F03A2DF8C7F089 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 9F7FFCC224497298A56D2F5A /* LICENSE */; };
@@ -33,6 +34,7 @@
 		333C08FDA7E3772C1B771569 /* Tools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tools.swift; sourceTree = "<group>"; };
 		3831A2AFD769A5D01D170A2D /* Prefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prefs.swift; sourceTree = "<group>"; };
 		5717218E06B4ECE1D75CA7C2 /* DownloadJob.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadJob.swift; sourceTree = "<group>"; };
+		6D4C9FD9205C138D91D79706 /* ToolInstaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolInstaller.swift; sourceTree = "<group>"; };
 		8A73B7225BC7C9BDDAF9000A /* CoverArt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverArt.swift; sourceTree = "<group>"; };
 		915CE42E0AAF224BB9BE422B /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
 		9C5A602E16A02BC059426800 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
@@ -62,6 +64,7 @@
 				3831A2AFD769A5D01D170A2D /* Prefs.swift */,
 				B6EA6BF2E8C62D69FDEACD61 /* RenameModel.swift */,
 				915CE42E0AAF224BB9BE422B /* Search.swift */,
+				6D4C9FD9205C138D91D79706 /* ToolInstaller.swift */,
 				333C08FDA7E3772C1B771569 /* Tools.swift */,
 				2B11719A202DFB1AF4E29CA5 /* Resources */,
 				2B6141C084803270FECEBCD8 /* Views */,
@@ -194,6 +197,7 @@
 				4DAAF86AE21C18CCF98C476F /* Search.swift in Sources */,
 				E62790D05C08A6CB00585204 /* SearchView.swift in Sources */,
 				BD3A251D18C03A14DE08C8B3 /* SettingsView.swift in Sources */,
+				7A936DD86FED6C0AD0FF3ADE /* ToolInstaller.swift in Sources */,
 				55886E780C0EBCD34EC583EC /* Tools.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

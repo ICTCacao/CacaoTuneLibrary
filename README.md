@@ -1,7 +1,7 @@
 # CacaoTuneLibrary
 
 YouTube の URL を貼り付けると、音声だけを **m4a（または mp3）** にして、チャンネルごとの棚（フォルダ）に並べる Mac アプリ。
-カバーやアレンジ曲を自分で聴くための道具。実作業は Homebrew の `yt-dlp` と `ffmpeg` に任せている。
+カバーやアレンジ曲を自分で聴くための道具。実作業は `yt-dlp` と `ffmpeg` に任せている（初回にアプリが自分で取ってくる）。
 （1.0.7 までは CacaoYT2Music という名前だった。設定は引き継ぐ）
 
 | できること | 中身 |
@@ -28,13 +28,9 @@ YouTube の URL を貼り付けると、音声だけを **m4a（または mp3）
 
 ## 必要なもの
 
-Mac は macOS 14 以降と、Homebrew の yt-dlp / ffmpeg。Windows はアプリが道具を用意するので、何も要らない。
+macOS 14 以降。Mac も Windows も、初回に窓の下の「道具を用意する」を押すと、アプリが yt-dlp・ffmpeg・deno を公式の配布元から取ってくる（Mac は `~/Library/Application Support/CacaoTuneLibrary/tools` に置く。Homebrew・パスワードは要らない）。すでに Homebrew で入れていれば、それを優先して使う。
 
-```bash
-brew install yt-dlp ffmpeg
-```
-
-YouTube 側の変更で保存できなくなったら、設定画面の「yt-dlp を更新」（`brew upgrade yt-dlp`）。
+YouTube 側の変更で保存できなくなったら、設定画面の「yt-dlp を更新」（アプリが入れたものはアプリが、Homebrew のものは `brew upgrade yt-dlp`）。
 
 ## 使い方
 
@@ -77,6 +73,7 @@ CacaoTuneLibrary/
     ├── Downloader.swift           # yt-dlp を起動し、出力を読んで進み具合に変える
     ├── CoverArt.swift             # 同名の jpg を Finder アイコンにする
     ├── Tools.swift                # yt-dlp / ffmpeg / brew の場所探し
+    ├── ToolInstaller.swift        # 道具を公式の配布元から取ってくる
     ├── Prefs.swift                # 設定キーと既定値
     └── Views/                     # 画面・設定
 ```
@@ -144,4 +141,4 @@ rm -rf dist/CacaoTuneLibrary.app && cp -R build/DerivedData/Build/Products/Relea
 
 ## ライセンス
 
-MIT License（[LICENSE](LICENSE)）。yt-dlp は Unlicense、ffmpeg は LGPL/GPL。どちらもアプリには同梱せず、Homebrew のものを使う。
+MIT License（[LICENSE](LICENSE)）。yt-dlp は Unlicense、ffmpeg は LGPL/GPL。どちらもアプリには同梱せず、初回に配布元から取ってくる。

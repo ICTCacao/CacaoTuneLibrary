@@ -279,20 +279,22 @@ struct ToolStatusView: View {
                 Text("yt-dlp \(model.ytdlpVersion ?? "") ・ ffmpeg")
                     .font(.caption)
                     .foregroundStyle(.secondary)
+            } else if model.installing {
+                ProgressView().controlSize(.small)
+                Text(model.installMessage).font(.caption)
             } else {
                 Image(systemName: "exclamationmark.triangle.fill").foregroundStyle(.orange)
-                Text(missing)
-                    .font(.caption)
+                if let err = model.installError {
+                    Text(err).font(.caption).lineLimit(2)
+                } else {
+                    Text("保存に使う道具（yt-dlp・ffmpeg）がまだありません").font(.caption)
+                }
+                Button(model.installError == nil ? "道具を用意する" : "もう一度") { model.installTools() }
+                    .controlSize(.small)
+                    .buttonStyle(.borderedProminent)
                 Button("設定…") { openSettings() }
                     .controlSize(.small)
             }
         }
-    }
-
-    private var missing: String {
-        var names: [String] = []
-        if model.ytdlp == nil { names.append("yt-dlp") }
-        if model.ffmpeg == nil { names.append("ffmpeg") }
-        return "\(names.joined(separator: " と ")) が見つかりません。ターミナルで brew install \(names.joined(separator: " ")) を実行してください"
     }
 }
