@@ -97,6 +97,10 @@ struct ContentView: View {
                     openWindow(id: "rename")
                 } label: { Label("ファイル名を整える", systemImage: "pencil.line") }
                     .help("保存した曲をチャンネルごとに並べて、検索・置換で名前を付け直す（⌘R）")
+                Button {
+                    openWindow(id: "tags")
+                } label: { Label("曲の情報を整える", systemImage: "tag") }
+                    .help("曲の中のタイトル・アーティスト・アルバムなどを直す（⇧⌘I）")
                 if model.jobs.contains(where: { !$0.isActive }) {
                     Button("終わったものを消す") { model.clearFinished() }
                 }
@@ -112,6 +116,8 @@ struct ContentView: View {
             urlFocused = true
             // 動作確認用: 環境変数に検索語があれば、起動と同時に検索窓を開く
             if let q = ProcessInfo.processInfo.environment["CACAOTUNELIBRARY_SEARCH"], !q.isEmpty { model.search(q) }
+            // 動作確認用: 起動と同時に「曲の情報を整える」窓を開く
+            if ProcessInfo.processInfo.environment["CACAOTUNELIBRARY_TAGS"] != nil { openWindow(id: "tags") }
         }
         .sheet(isPresented: $model.showSearch) {
             SearchView().environment(model)

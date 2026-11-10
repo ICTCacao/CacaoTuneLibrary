@@ -19,9 +19,11 @@
 		7A936DD86FED6C0AD0FF3ADE /* ToolInstaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4C9FD9205C138D91D79706 /* ToolInstaller.swift */; };
 		82F5A084C90E43A996CE8976 /* RenameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EA6BF2E8C62D69FDEACD61 /* RenameModel.swift */; };
 		9440953E8EFE14965C6F3417 /* CoverArt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A73B7225BC7C9BDDAF9000A /* CoverArt.swift */; };
+		AB9B677CF4BC560B9B6AB0FF /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D90381E7C93096783E41FDC /* TagView.swift */; };
 		B770DFAEE8F03A2DF8C7F089 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 9F7FFCC224497298A56D2F5A /* LICENSE */; };
 		B77F9CB1787497AAD0C1FE2D /* ChannelSorter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94B6D02BDD3420D955FFCEC /* ChannelSorter.swift */; };
 		BD3A251D18C03A14DE08C8B3 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4656A472AB74F4A8055410 /* SettingsView.swift */; };
+		D0F6C4E9E6A5D6140520DDD6 /* TagModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F11F8079D43FF798A88075 /* TagModel.swift */; };
 		D3168F0B8B4988365F1813D4 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE148AB30E3BDDE4661B684 /* Downloader.swift */; };
 		DE6173FAB358189024AE0F5C /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5A602E16A02BC059426800 /* AppModel.swift */; };
 		E62790D05C08A6CB00585204 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29851B80DE5390AFAB46BC18 /* SearchView.swift */; };
@@ -33,6 +35,7 @@
 		2A7DE6A2826722BDA84B97C2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		333C08FDA7E3772C1B771569 /* Tools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tools.swift; sourceTree = "<group>"; };
 		3831A2AFD769A5D01D170A2D /* Prefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prefs.swift; sourceTree = "<group>"; };
+		4D90381E7C93096783E41FDC /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
 		5717218E06B4ECE1D75CA7C2 /* DownloadJob.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadJob.swift; sourceTree = "<group>"; };
 		6D4C9FD9205C138D91D79706 /* ToolInstaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolInstaller.swift; sourceTree = "<group>"; };
 		8A73B7225BC7C9BDDAF9000A /* CoverArt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverArt.swift; sourceTree = "<group>"; };
@@ -45,6 +48,7 @@
 		B6EA6BF2E8C62D69FDEACD61 /* RenameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameModel.swift; sourceTree = "<group>"; };
 		CBE148AB30E3BDDE4661B684 /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
 		D39427062C0775270F10EDDE /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D4F11F8079D43FF798A88075 /* TagModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagModel.swift; sourceTree = "<group>"; };
 		D9F2AE65515F314558F3E54B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		DA43444B77FC5DF94087368C /* CacaoTuneLibraryApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacaoTuneLibraryApp.swift; sourceTree = "<group>"; };
 		E3B13D6874B1DDC9E961ABB1 /* CacaoTuneLibrary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CacaoTuneLibrary.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -64,6 +68,7 @@
 				3831A2AFD769A5D01D170A2D /* Prefs.swift */,
 				B6EA6BF2E8C62D69FDEACD61 /* RenameModel.swift */,
 				915CE42E0AAF224BB9BE422B /* Search.swift */,
+				D4F11F8079D43FF798A88075 /* TagModel.swift */,
 				6D4C9FD9205C138D91D79706 /* ToolInstaller.swift */,
 				333C08FDA7E3772C1B771569 /* Tools.swift */,
 				2B11719A202DFB1AF4E29CA5 /* Resources */,
@@ -89,6 +94,7 @@
 				A2CDD9821C79F332D3DC170B /* RenameView.swift */,
 				29851B80DE5390AFAB46BC18 /* SearchView.swift */,
 				ED4656A472AB74F4A8055410 /* SettingsView.swift */,
+				4D90381E7C93096783E41FDC /* TagView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -197,6 +203,8 @@
 				4DAAF86AE21C18CCF98C476F /* Search.swift in Sources */,
 				E62790D05C08A6CB00585204 /* SearchView.swift in Sources */,
 				BD3A251D18C03A14DE08C8B3 /* SettingsView.swift in Sources */,
+				D0F6C4E9E6A5D6140520DDD6 /* TagModel.swift in Sources */,
+				AB9B677CF4BC560B9B6AB0FF /* TagView.swift in Sources */,
 				7A936DD86FED6C0AD0FF3ADE /* ToolInstaller.swift in Sources */,
 				55886E780C0EBCD34EC583EC /* Tools.swift in Sources */,
 			);

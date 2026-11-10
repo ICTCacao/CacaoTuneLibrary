@@ -643,7 +643,7 @@ function rnRender() {
   if (rnItems.length === 0) {
     list.innerHTML = `<div class="empty"><div class="big">📁</div><div>保存先に m4a / mp3 がありません</div></div>`;
   } else {
-    list.innerHTML = rnChannels().map((ch) => {
+    list.innerHTML = rnChannels().filter((ch) => !rnScope || ch === rnScope).map((ch) => {
       const group = rnItems.filter((i) => i.channel === ch);
       const rows = group.map((i) => `
         <div class="rn ${rnChanged(i) ? "changed" : ""}" data-id="${i.id}">
@@ -687,7 +687,7 @@ function bindRename() {
   $("rnApply").addEventListener("click", rnApplyReplace);
   $("rnSearch").addEventListener("keydown", (e) => { if (e.key === "Enter") rnApplyReplace(); });
   $("rnReplace").addEventListener("keydown", (e) => { if (e.key === "Enter") rnApplyReplace(); });
-  $<HTMLSelectElement>("rnScope").addEventListener("change", (e) => { rnScope = (e.target as HTMLSelectElement).value; });
+  $<HTMLSelectElement>("rnScope").addEventListener("change", (e) => { rnScope = (e.target as HTMLSelectElement).value; rnRender(); });
   $("rnResetAll").addEventListener("click", () => { rnItems.forEach((i) => (i.newBase = i.originalBase)); rnValidate(); rnRender(); });
   $("rnRescan").addEventListener("click", rnScan);
   $("rnClose").addEventListener("click", () => { $("renamePanel").hidden = true; });

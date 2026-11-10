@@ -47,6 +47,11 @@ struct CacaoTuneLibraryApp: App {
                 .environment(model)
         }
         .defaultSize(width: 820, height: 600)
+        Window("曲の情報を整える", id: "tags") {
+            TagView()
+                .environment(model)
+        }
+        .defaultSize(width: 980, height: 680)
         Settings {
             SettingsView()
                 .environment(model)
@@ -81,5 +86,7 @@ private struct RenameMenuButton: View {
     var body: some View {
         Button("保存した曲のファイル名を整える…") { openWindow(id: "rename") }
             .keyboardShortcut("r", modifiers: [.command])
+        Button("保存した曲の情報（タイトル・アーティストなど）を整える…") { openWindow(id: "tags") }
+            .keyboardShortcut("i", modifiers: [.command, .shift])
     }
 }

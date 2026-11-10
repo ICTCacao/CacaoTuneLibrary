@@ -83,7 +83,7 @@ private struct RenameBody: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
                 List {
-                    ForEach(model.channels, id: \.self) { ch in
+                    ForEach(model.scope.isEmpty ? model.channels : [model.scope], id: \.self) { ch in
                         Section {
                             ForEach(model.items(in: ch)) { item in
                                 RenameRow(item: item, model: model)

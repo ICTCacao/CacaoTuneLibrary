@@ -25,7 +25,9 @@ final class AppModel {
     // MARK: 設定の読み出し
 
     var folder: URL {
-        URL(fileURLWithPath: UserDefaults.standard.string(forKey: Prefs.folder) ?? Prefs.defaultFolder.path, isDirectory: true)
+        // 動作確認用: 環境変数で保存先を差し替える（本物の棚を触らずに試すため）
+        if let f = ProcessInfo.processInfo.environment["CACAOTUNELIBRARY_FOLDER"], !f.isEmpty { return URL(fileURLWithPath: f, isDirectory: true) }
+        return URL(fileURLWithPath: UserDefaults.standard.string(forKey: Prefs.folder) ?? Prefs.defaultFolder.path, isDirectory: true)
     }
     var format: AudioFormat {
         AudioFormat(rawValue: UserDefaults.standard.string(forKey: Prefs.format) ?? "") ?? .m4a
