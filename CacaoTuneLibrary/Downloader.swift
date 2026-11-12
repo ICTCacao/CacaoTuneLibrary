@@ -10,12 +10,19 @@ final class Downloader {
         var wholePlaylist: Bool
         var idInFilename: Bool
         var channelFolders: Bool
+        var albumName: String
         var ytdlp: URL
         var ffmpegDir: URL
     }
 
     private var process: Process?
     private var buffer = Data()
+
+    /// タグを埋め込む後処理（Metadata）の最後に -metadata album=… を足す（yt-dlp の値より後なので、こちらが勝つ）。
+    /// 引数は shlex で分けられるので、' で囲み、中の ' は '"'"' にする（: や記号が入っても壊れない）
+    static func albumPPA(_ album: String) -> String {
+        "Metadata:-metadata '" + "album=\(album)".replacingOccurrences(of: "'", with: "'\"'\"'") + "'"
+    }
 
     /// 中央を正方形に切り抜く yt-dlp の後処理引数（README の例と同じ）
     static let squareCropPPA = "ThumbnailsConvertor+ffmpeg_o:-c:v mjpeg -vf crop=\"'if(gt(ih,iw),iw,ih)':'if(gt(iw,ih),ih,iw)'\""
@@ -41,6 +48,8 @@ final class Downloader {
                 + (o.idInFilename ? "%(title)s [%(id)s].%(ext)s" : "%(title)s.%(ext)s"),
         ]
         if o.format == .mp3 { a += ["--audio-quality", "0"] }
+        let album = o.albumName.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !album.isEmpty { a += ["--ppa", albumPPA(album)] }
         switch o.coverMode {
         case .pad: a += ["--ppa", squarePadPPA]
         case .crop: a += ["--ppa", squareCropPPA]

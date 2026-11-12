@@ -18,12 +18,13 @@ interface Settings {
   wholePlaylist: boolean;
   idInFilename: boolean;
   channelFolders: boolean;
+  albumName: string;
   ytdlpPath: string;
   ffmpegPath: string;
 }
 const DEFAULTS: Settings = {
   folder: "", format: "m4a", coverMode: "pad", keepThumbnail: false, wholePlaylist: false,
-  idInFilename: false, channelFolders: true, ytdlpPath: "", ffmpegPath: "",
+  idInFilename: false, channelFolders: true, albumName: "CacaoTuneLibrary", ytdlpPath: "", ffmpegPath: "",
 };
 let settings: Settings = loadSettings();
 function loadSettings(): Settings {
@@ -180,6 +181,9 @@ function downloadArgs(url: string): string[] {
   ];
   if (settings.keepThumbnail) a.push("--write-thumbnail");
   if (settings.format === "mp3") a.push("--audio-quality", "0");
+  // アルバム名: タグを埋め込む後処理の最後に -metadata album=… を足す（shlex で分けられるので ' で囲む）
+  const album = settings.albumName.trim();
+  if (album) a.push("--ppa", `Metadata:-metadata '${`album=${album}`.replace(/'/g, `'"'"'`)}'`);
   if (settings.coverMode === "pad") a.push("--ppa", SQUARE_PAD_PPA);
   if (settings.coverMode === "crop") a.push("--ppa", SQUARE_CROP_PPA);
   if (tools.deno) a.push("--js-runtimes", `deno:${tools.deno}`);
@@ -524,6 +528,7 @@ function openSettings() {
   $<HTMLInputElement>("optChannelFolders").checked = settings.channelFolders;
   $<HTMLInputElement>("optWholePlaylist").checked = settings.wholePlaylist;
   $<HTMLInputElement>("optIdInFilename").checked = settings.idInFilename;
+  $<HTMLInputElement>("optAlbum").value = settings.albumName;
   $<HTMLInputElement>("optYtdlp").value = settings.ytdlpPath;
   $<HTMLInputElement>("optFfmpeg").value = settings.ffmpegPath;
   $("updateOut").hidden = true;
@@ -538,6 +543,8 @@ function bindSettings() {
   });
   bind("optKeepThumb", "keepThumbnail"); bind("optChannelFolders", "channelFolders");
   bind("optWholePlaylist", "wholePlaylist"); bind("optIdInFilename", "idInFilename");
+  $<HTMLInputElement>("optAlbum").addEventListener("change", (e) => { settings.albumName = (e.target as HTMLInputElement).value; saveSettings(); });
+  $("btnAlbumDefault").addEventListener("click", () => { settings.albumName = DEFAULTS.albumName; $<HTMLInputElement>("optAlbum").value = settings.albumName; saveSettings(); });
   $<HTMLInputElement>("optYtdlp").addEventListener("change", (e) => { settings.ytdlpPath = (e.target as HTMLInputElement).value; saveSettings(); refreshTools(); });
   $<HTMLInputElement>("optFfmpeg").addEventListener("change", (e) => { settings.ffmpegPath = (e.target as HTMLInputElement).value; saveSettings(); refreshTools(); });
   $("btnRedetect").addEventListener("click", refreshTools);

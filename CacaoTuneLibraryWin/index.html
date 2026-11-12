@@ -48,6 +48,9 @@
         <label><input type="radio" name="coverMode" value="none" /> そのまま（16:9）</label>
         <label><input type="checkbox" id="optKeepThumb" /> カバー画像（jpg）もファイルとして残す</label>
         <p class="note">曲の中には常にカバー画像とタイトル・チャンネル名を埋め込みます。エクスプローラはこのカバーをサムネイルに使います。</p>
+        <h3>曲の情報（タグ）</h3>
+        <div class="row"><span class="label w">アルバム名</span><input id="optAlbum" type="text" placeholder="空なら入れない" /><button id="btnAlbumDefault">初期値に戻す</button></div>
+        <p class="note">これから保存する曲に入れるアルバム名です（初期値は CacaoTuneLibrary）。空にするとアルバムは入れません。</p>
         <h3>保存</h3>
         <label><input type="checkbox" id="optChannelFolders" /> 保存先の中にチャンネル名のフォルダを作って分ける</label>
         <label><input type="checkbox" id="optWholePlaylist" /> 動画の URL に再生リストが付いているとき（&amp;list=…）も全曲を保存する</label>

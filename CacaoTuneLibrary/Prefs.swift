@@ -10,6 +10,7 @@ enum Prefs {
     static let wholePlaylist = "wholePlaylist"     // 再生リストの URL なら全曲
     static let idInFilename = "idInFilename"       // ファイル名に動画 ID を付ける（同名曲の衝突よけ）
     static let channelFolders = "channelFolders"   // 保存先の中にチャンネル名のフォルダを作って分ける
+    static let albumName = "albumName"             // 保存した曲に入れるアルバム名（空なら入れない）
     static let ytdlpPath = "ytdlpPath"             // 空なら自動検出
     static let ffmpegPath = "ffmpegPath"           // 空なら自動検出
 
@@ -37,6 +38,7 @@ enum Prefs {
             wholePlaylist: false,
             idInFilename: false,
             channelFolders: true,
+            albumName: AppInfo.name,
             ytdlpPath: "",
             ffmpegPath: "",
         ])

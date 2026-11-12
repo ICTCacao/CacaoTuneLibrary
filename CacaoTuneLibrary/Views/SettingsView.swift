@@ -9,6 +9,7 @@ struct SettingsView: View {
     @AppStorage(Prefs.wholePlaylist) private var wholePlaylist = false
     @AppStorage(Prefs.idInFilename) private var idInFilename = false
     @AppStorage(Prefs.channelFolders) private var channelFolders = true
+    @AppStorage(Prefs.albumName) private var albumName = AppInfo.name
     @AppStorage(Prefs.ytdlpPath) private var ytdlpPath = ""
     @AppStorage(Prefs.ffmpegPath) private var ffmpegPath = ""
     @State private var updating = false
@@ -24,6 +25,18 @@ struct SettingsView: View {
                 .pickerStyle(.radioGroup)
                 Toggle("カバー画像（jpg）もファイルとして残す", isOn: $keepThumbnail)
                 Text("曲の中には常にカバー画像とタイトル・チャンネル名を埋め込みます。")
+                    .font(.caption).foregroundStyle(.secondary)
+            }
+            Section("曲の情報（タグ）") {
+                LabeledContent("アルバム名") {
+                    HStack {
+                        TextField("空なら入れない", text: $albumName)
+                            .textFieldStyle(.roundedBorder)
+                        Button("初期値に戻す") { albumName = AppInfo.name }
+                            .disabled(albumName == AppInfo.name)
+                    }
+                }
+                Text("これから保存する曲に入れるアルバム名です（初期値は \(AppInfo.name)）。空にするとアルバムは入れません。保存済みの曲は「曲の情報を整える」で直せます。")
                     .font(.caption).foregroundStyle(.secondary)
             }
             Section("保存") {

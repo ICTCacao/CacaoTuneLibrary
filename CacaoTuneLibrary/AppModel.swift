@@ -235,6 +235,7 @@ final class AppModel {
             wholePlaylist: d.bool(forKey: Prefs.wholePlaylist),
             idInFilename: d.bool(forKey: Prefs.idInFilename),
             channelFolders: d.bool(forKey: Prefs.channelFolders),
+            albumName: d.string(forKey: Prefs.albumName) ?? AppInfo.name,
             ytdlp: ytdlp,
             ffmpegDir: ffmpeg.deletingLastPathComponent())
         let dl = Downloader()
