@@ -68,6 +68,10 @@ private struct TagBody: View {
                 .frame(maxWidth: 320)
                 Text("\(model.targets.count) 曲").foregroundStyle(.secondary)
                 Spacer()
+                if model.decomposedCount > 0 {
+                    Button("濁点の文字化けを直す（\(model.decomposedCount) 曲）") { model.normalizeAll() }
+                        .help("「カ＋゛」のように分かれた濁点・半濁点を 1 文字（ガ）にそろえます。分かれたままだと、車のナビなどで □ になります")
+                }
                 Button("タイトルをファイル名にそろえる") { model.titleFromFileName() }
                     .help("対象の曲のタイトルを、いまのファイル名（動画 ID なし）にします")
                 Button("すべて元に戻す") { model.resetAll() }

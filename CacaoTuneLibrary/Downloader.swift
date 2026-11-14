@@ -21,7 +21,16 @@ final class Downloader {
     /// タグを埋め込む後処理（Metadata）の最後に -metadata album=… を足す（yt-dlp の値より後なので、こちらが勝つ）。
     /// 引数は shlex で分けられるので、' で囲み、中の ' は '"'"' にする（: や記号が入っても壊れない）
     static func albumPPA(_ album: String) -> String {
-        "Metadata:-metadata '" + "album=\(album)".replacingOccurrences(of: "'", with: "'\"'\"'") + "'"
+        "Metadata:-metadata '" + "album=\(album.precomposedStringWithCanonicalMapping)".replacingOccurrences(of: "'", with: "'\"'\"'") + "'"
+    }
+
+    /// アルバム名の指定は yt-dlp の設定ファイル（UTF-8）に書いて --config-locations で読ませる。
+    /// Foundation の Process は引数の「ガ」を「カ＋濁点」に分けて（NFD に）渡すので、引数に日本語を載せない
+    static func albumConfig(_ album: String) -> URL? {
+        let ppa = albumPPA(album)
+        let line = "--ppa \"" + ppa.replacingOccurrences(of: "\\", with: "\\\\").replacingOccurrences(of: "\"", with: "\\\"") + "\"\n"
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent("cacaotunelibrary-album.conf")
+        do { try line.write(to: url, atomically: true, encoding: .utf8); return url } catch { return nil }
     }
 
     /// 中央を正方形に切り抜く yt-dlp の後処理引数（README の例と同じ）
@@ -49,7 +58,7 @@ final class Downloader {
         ]
         if o.format == .mp3 { a += ["--audio-quality", "0"] }
         let album = o.albumName.trimmingCharacters(in: .whitespacesAndNewlines)
-        if !album.isEmpty { a += ["--ppa", albumPPA(album)] }
+        if !album.isEmpty, let conf = albumConfig(album) { a += ["--config-locations", conf.path] }
         switch o.coverMode {
         case .pad: a += ["--ppa", squarePadPPA]
         case .crop: a += ["--ppa", squareCropPPA]

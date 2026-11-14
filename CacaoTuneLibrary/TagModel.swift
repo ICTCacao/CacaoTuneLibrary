@@ -47,6 +47,10 @@ final class TagItem: Identifiable {
     func isChanged(_ f: TagField) -> Bool { (values[f] ?? "") != (original[f] ?? "") }
     var isChanged: Bool { TagField.allCases.contains { isChanged($0) } }
     var changedFields: [TagField] { TagField.allCases.filter { isChanged($0) } }
+    /// どこかの項目に、分かれた濁点・半濁点（U+3099 / U+309A）がある
+    var hasDecomposed: Bool {
+        values.values.contains { $0.unicodeScalars.contains { $0.value == 0x3099 || $0.value == 0x309A } }
+    }
     /// 一覧に出す名前（タイトルが空ならファイル名）
     var displayTitle: String {
         let t = value(.title).trimmingCharacters(in: .whitespaces)
@@ -153,11 +157,31 @@ final class TagModel {
         }
     }
 
-    /// ffmpeg -f ffmetadata で、いまのタグを読む
-    static func readTags(_ url: URL, ffmpeg: URL) -> Result<[TagField: String], Error> {
+    /// ffmpeg -f ffmetadata で、いまのタグを全部（キーは小文字）読む
+    static func readRawTags(_ url: URL, ffmpeg: URL) -> Result<[String: String], Error> {
         let r = runProcess(ffmpeg, ["-v", "error", "-nostdin", "-i", url.path, "-f", "ffmetadata", "-"])
         guard r.status == 0 else { return .failure(TagError.message(r.error.isEmpty ? "タグを読めませんでした" : r.error)) }
-        let raw = parseFFMetadata(r.output)
+        return .success(parseFFMetadata(r.output))
+    }
+
+    /// ffmetadata の書き方: = ; # \ 改行 の前に \ を付ける
+    static func escapeFFMetadata(_ s: String) -> String {
+        var o = ""
+        for ch in s {
+            if ch == "\r\n" { o += "\\\n"; continue }        // CRLF は 1 文字として来るので改行にそろえる
+            if "=;#\\\n".contains(ch) { o.append("\\") }
+            o.append(ch)
+        }
+        return o
+    }
+
+    /// いまのタグのうち、この窓で扱う項目
+    static func readTags(_ url: URL, ffmpeg: URL) -> Result<[TagField: String], Error> {
+        let raw: [String: String]
+        switch readRawTags(url, ffmpeg: ffmpeg) {
+        case .success(let t): raw = t
+        case .failure(let e): return .failure(e)
+        }
         var t: [TagField: String] = [:]
         for f in TagField.allCases {
             if let v = raw[f.rawValue] { t[f] = v }
@@ -221,9 +245,22 @@ final class TagModel {
         for i in targets where i.loaded { i.values[fillField] = fillValue }
     }
 
-    /// 対象の曲のタイトルを、いまのファイル名（動画 ID なし）にする
+    /// 対象の曲のタイトルを、いまのファイル名（動画 ID なし）にする。
+    /// Mac のディスク（HFS+）のファイル名は「ガ」が「カ＋濁点」に分かれている（NFD）ので、1 文字（NFC）に戻して入れる
     func titleFromFileName() {
-        for i in targets where i.loaded { i.values[.title] = i.fileBase }
+        for i in targets where i.loaded { i.values[.title] = i.fileBase.precomposedStringWithCanonicalMapping }
+    }
+
+    /// 「カ＋濁点」のように分かれた文字（NFD）を含む曲の数（対象のうち）
+    var decomposedCount: Int { targets.filter { $0.loaded && $0.hasDecomposed }.count }
+
+    /// 対象の曲のすべての項目で、分かれた濁点・半濁点を 1 文字にそろえる（車のナビなどで □ になるのを防ぐ）
+    func normalizeAll() {
+        for i in targets where i.loaded {
+            for f in TagField.allCases where i.values[f] != nil {
+                i.values[f] = i.value(f).precomposedStringWithCanonicalMapping
+            }
+        }
     }
 
     func reset(_ item: TagItem) { item.values = item.original }
@@ -249,7 +286,11 @@ final class TagModel {
                         item.error = err
                     } else {
                         item.error = nil
-                        for (f, v) in fields { item.original[f] = v }
+                        for (f, v) in fields {
+                            let n = v.precomposedStringWithCanonicalMapping
+                            item.original[f] = n
+                            item.values[f] = n
+                        }
                     }
                     self.writing?.done += 1
                 }
@@ -266,12 +307,33 @@ final class TagModel {
     /// 戻り値は失敗の理由（成功なら nil）
     static func writeTags(_ url: URL, fields: [(TagField, String)], ffmpeg: URL) -> String? {
         let ext = url.pathExtension.lowercased()
-        let tmp = url.deletingLastPathComponent().appendingPathComponent(".cacaotag-\(UUID().uuidString).\(ext)")
-        var args = ["-v", "error", "-nostdin", "-y", "-i", url.path, "-map", "0", "-c", "copy"]
-        for (f, v) in fields {
-            args += ["-metadata", "\(f.rawValue)=\(v)"]
-            if f == .description { args += ["-metadata", "synopsis=\(v)"] }   // mp4 の長い説明も揃える
+        let dir = url.deletingLastPathComponent()
+        let tmp = dir.appendingPathComponent(".cacaotag-\(UUID().uuidString).\(ext)")
+        // 値はコマンドの引数では渡さない: Foundation の Process は引数を「カ＋濁点」に分けて（NFD に）渡してしまい、
+        // 車のナビなどで濁点が □ になる。いまのタグを全部読み、直した値と合わせて UTF-8 のファイル（ffmetadata）に書いて読ませる
+        let current: [String: String]
+        switch readRawTags(url, ffmpeg: ffmpeg) {
+        case .success(let t): current = t
+        case .failure(let e): return e.localizedDescription
         }
+        var tags = current
+        for k in ["major_brand", "minor_version", "compatible_brands", "encoder"] { tags[k] = nil }   // 書き出すときに作られるもの
+        for (f, v) in fields {
+            tags[f.rawValue] = v.isEmpty ? nil : v
+            if f == .description { tags["synopsis"] = v.isEmpty ? nil : v }   // mp4 の長い説明も揃える
+        }
+        var meta = ";FFMETADATA1\n"
+        for k in tags.keys.sorted() {
+            // 書き込む文字は必ず NFC（「ガ」を 1 文字）に
+            meta += escapeFFMetadata(k) + "=" + escapeFFMetadata(tags[k]!.precomposedStringWithCanonicalMapping) + "\n"
+        }
+        let metaFile = FileManager.default.temporaryDirectory.appendingPathComponent("cacaotag-\(UUID().uuidString).txt")
+        do { try meta.write(to: metaFile, atomically: true, encoding: .utf8) } catch { return error.localizedDescription }
+        defer { try? FileManager.default.removeItem(at: metaFile) }
+        // -dn: チャプター付きの動画から保存した曲には、チャプター用の文字トラック（bin_data）が入っている。
+        // そのまま写すと m4a に書けず失敗するので写さない。チャプターは -map_chapters 0 で写り、ffmpeg が作り直す
+        var args = ["-v", "error", "-nostdin", "-y", "-i", url.path, "-f", "ffmetadata", "-i", metaFile.path,
+                    "-map", "0", "-dn", "-map_metadata", "1", "-map_chapters", "0", "-c", "copy"]
         if ext == "mp3" { args += ["-id3v2_version", "3", "-f", "mp3"] } else { args += ["-f", "ipod"] }
         args.append(tmp.path)
         let r = runProcess(ffmpeg, args)
